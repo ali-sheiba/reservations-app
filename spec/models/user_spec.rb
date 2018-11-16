@@ -9,7 +9,7 @@
 #  first_name      :string           not null
 #  last_name       :string           not null
 #  password_digest :string           not null
-#  role            :integer          default(1), not null
+#  role            :integer          default("resturant"), not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #
@@ -21,14 +21,19 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  subject { build(:user) }
+
   describe 'validations' do
-    subject { build(:user) }
     it { should have_secure_password }
     it { should validate_presence_of(:first_name) }
     it { should validate_presence_of(:last_name) }
     it { should validate_uniqueness_of(:email).ignoring_case_sensitivity }
     it { should allow_value('user@example.com').for(:email) }
     it { should_not allow_value('invalid-email').for(:email) }
+  end
+
+  describe 'associations' do
+    it { should have_one(:restaurant).with_foreign_key('manager_id') }
   end
 
   describe 'enums' do

@@ -9,7 +9,7 @@
 #  first_name      :string           not null
 #  last_name       :string           not null
 #  password_digest :string           not null
-#  role            :integer          default(1), not null
+#  role            :integer          default("resturant"), not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #
@@ -33,6 +33,9 @@ class User < ApplicationRecord
   }
 
   ## -------------------- Associations -------------------- ##
+
+  has_one :restaurant, dependent: :destroy, required: false, foreign_key: :manager_id
+
   ## -------------------- Validations --------------------- ##
 
   validates :first_name, presence: true
