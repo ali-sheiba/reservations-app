@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
 class V1::SessionsController < ApplicationController
+  power :sessions
+
   def create
     user = User.login(session_params)
     if user
-      render_create(
+      render_created(
         user: user,
         token: JsonWebToken.encode(user.jwt_payload)
       )

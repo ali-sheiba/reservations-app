@@ -27,6 +27,9 @@
 
 class Reservation < ApplicationRecord
   ## -------------------- Requirements -------------------- ##
+
+  include ReservationPresenter
+
   ## ----------------------- Scopes ----------------------- ##
   ## --------------------- Constants ---------------------- ##
   ## ----------------------- Enums ------------------------ ##

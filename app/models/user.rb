@@ -22,6 +22,7 @@ class User < ApplicationRecord
   ## -------------------- Requirements -------------------- ##
 
   has_secure_password
+  include UserPresenter
 
   ## ----------------------- Scopes ----------------------- ##
   ## --------------------- Constants ---------------------- ##
