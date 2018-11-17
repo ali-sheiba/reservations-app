@@ -24,6 +24,10 @@ class Guest < ApplicationRecord
   ## --------------------- Constants ---------------------- ##
   ## ----------------------- Enums ------------------------ ##
   ## -------------------- Associations -------------------- ##
+
+  has_many :reservations, dependent: :destroy
+  has_many :guests,       through: :reservations
+
   ## -------------------- Validations --------------------- ##
 
   validates :first_name, presence: true

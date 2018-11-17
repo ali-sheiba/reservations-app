@@ -29,4 +29,9 @@ RSpec.describe Guest, type: :model do
     it { should allow_value('user@example.com').for(:email) }
     it { should_not allow_value('invalid-email').for(:email) }
   end
+
+  describe 'associations' do
+    it { should have_many(:reservations) }
+    it { should have_many(:guests).through(:reservations) }
+  end
 end

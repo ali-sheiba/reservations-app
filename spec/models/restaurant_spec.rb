@@ -44,5 +44,7 @@ RSpec.describe Restaurant, type: :model do
 
   describe 'associations' do
     it { should belong_to(:manager).class_name('User') }
+    it { should have_many(:reservations) }
+    it { should have_many(:guests).through(:reservations) }
   end
 end

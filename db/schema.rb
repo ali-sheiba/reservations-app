@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_16_134859) do
+ActiveRecord::Schema.define(version: 2018_11_17_075343) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,19 @@ ActiveRecord::Schema.define(version: 2018_11_16_134859) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_guests_on_email"
     t.index ["phone"], name: "index_guests_on_phone"
+  end
+
+  create_table "reservations", force: :cascade do |t|
+    t.bigint "restaurant_id", null: false
+    t.bigint "guest_id", null: false
+    t.integer "status", default: 0, null: false
+    t.datetime "start_time", null: false
+    t.integer "covers", default: 1, null: false
+    t.text "note"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["guest_id"], name: "index_reservations_on_guest_id"
+    t.index ["restaurant_id"], name: "index_reservations_on_restaurant_id"
   end
 
   create_table "restaurants", force: :cascade do |t|
@@ -52,5 +65,7 @@ ActiveRecord::Schema.define(version: 2018_11_16_134859) do
     t.index "lower((email)::text)", name: "index_users_on_LOWER_email", unique: true
   end
 
+  add_foreign_key "reservations", "guests", on_delete: :cascade
+  add_foreign_key "reservations", "restaurants", on_delete: :cascade
   add_foreign_key "restaurants", "users", column: "manager_id", on_delete: :cascade
 end
