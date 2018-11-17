@@ -35,8 +35,11 @@ begin
 rescue ActiveRecord::PendingMigrationError => e
   puts e.to_s.strip
   exit 1
+end
 
+RSpec.configure do |config|
   config.include Requests::JsonHelpers, type: :request
+  config.include Requests::JsonHelpers, type: :controller
   # config.include Requests::AuthHelpers, type: :request
 
   Shoulda::Matchers.configure do |matchers|
@@ -45,8 +48,6 @@ rescue ActiveRecord::PendingMigrationError => e
       with.library :rails
     end
   end
-end
-RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 

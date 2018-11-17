@@ -64,4 +64,12 @@ RSpec.describe User, type: :model do
       expect(record).to be false
     end
   end
+
+  describe 'jwt_payload' do
+    let(:user) { create(:user) }
+    it 'return a hash with user id and role' do
+      expect(user.jwt_payload).to include(:id)
+      expect(user.jwt_payload).to include(:role)
+    end
+  end
 end

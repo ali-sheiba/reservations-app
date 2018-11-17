@@ -53,4 +53,11 @@ class User < ApplicationRecord
   end
 
   ## ---------------------- Methods ----------------------- ##
+
+  def jwt_payload
+    {
+      id: id,
+      role: role
+    }
+  end
 end
