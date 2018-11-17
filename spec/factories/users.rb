@@ -23,7 +23,7 @@ FactoryBot.define do
     first_name  { Faker::Name.first_name }
     last_name   { Faker::Name.last_name }
     email       { Faker::Internet.free_email(first_name) }
-    role        { %i[admin resturant].sample }
+    role        { User.roles.keys.sample }
     password    { 'password' }
   end
 end

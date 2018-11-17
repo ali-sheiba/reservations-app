@@ -29,8 +29,8 @@ class User < ApplicationRecord
   ## ----------------------- Enums ------------------------ ##
 
   enum role: {
-    admin: 0,
-    resturant: 1
+    admin: 0, # System super admin
+    manager: 1 # Restaurant owner
   }
 
   ## -------------------- Associations -------------------- ##

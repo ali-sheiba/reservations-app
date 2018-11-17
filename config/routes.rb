@@ -4,5 +4,6 @@ Rails.application.routes.draw do
   namespace :v1, constraints: { format: :json } do
     resources :sessions, only: [:create]
     resources :restaurants
+    resources :reservations
   end
 end

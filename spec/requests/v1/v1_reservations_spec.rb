@@ -2,10 +2,10 @@
 
 require 'rails_helper'
 
-RSpec.describe 'V1/Restaurants', type: :request do
-  describe 'GET /v1/restaurants' do
+RSpec.describe 'V1/Reservations', type: :request do
+  describe 'GET /v1/reservations' do
     it 'works! (now write some real specs)' do
-      get v1_restaurants_path
+      get v1_reservations_path
       expect(response).to have_http_status(200)
     end
   end
