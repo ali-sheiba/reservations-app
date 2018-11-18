@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: reservations
@@ -41,5 +42,32 @@ RSpec.describe Reservation, type: :model do
 
   describe 'enums' do
     it { should define_enum_for(:status) }
+  end
+
+  describe 'booking validations' do
+    before(:all) do
+      date = Date.today
+      user = create(:user, role: :guest)
+      restaurant = create(:restaurant)
+      @r_a = create(:reservation, restaurant: restaurant, user: user, start_time: Faker::Time.between(date, date, :day))
+      @r_b = build(:reservation, restaurant: restaurant, user: user, start_time: Faker::Time.between(date, date, :day))
+    end
+
+    describe 'booked_in_same_day?' do
+      it 'should return true if same user booked in same restaurant in same day' do
+        expect(@r_b.booked_in_same_day?).to be true
+      end
+
+      it 'should return fasle if same user booked in different day or different restaurant' do
+        expect(@r_a.booked_in_same_day?).to be false
+      end
+    end
+
+    describe 'book_once_aday' do
+      it 'should validate if user booked in same restaurant in same day' do
+        expect(@r_b.valid?).to be false
+        expect(@r_b.errors.messages).to include(user: ['Guest can book only once a day'])
+      end
+    end
   end
 end

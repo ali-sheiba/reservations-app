@@ -36,7 +36,7 @@ class User < ApplicationRecord
 
   ## -------------------- Associations -------------------- ##
 
-  has_one :restaurant, dependent: :destroy, required: false, foreign_key: :manager_id
+  has_one :restaurant, dependent: :destroy, foreign_key: :manager_id
   has_many :reservations
 
   ## -------------------- Validations --------------------- ##
@@ -51,12 +51,15 @@ class User < ApplicationRecord
 
   ## ------------------- Class Methods -------------------- ##
 
+  # Authenticate user and return User object on success or false
   def self.login(email:, password:)
     find_by(email: email.downcase)&.authenticate(password) || false
   end
 
   ## ---------------------- Methods ----------------------- ##
 
+  # JWT Payload, required ID for authentication
+  # and role can be used consumer device
   def jwt_payload
     {
       id: id,

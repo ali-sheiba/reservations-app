@@ -47,4 +47,17 @@ RSpec.describe Restaurant, type: :model do
     it { should have_many(:reservations) }
     it { should have_many(:guests).through(:reservations) }
   end
+
+  describe 'owner_with_manager_role' do
+    it 'should validate restaurant manager user to have manager role' do
+      user_a = create(:user, role: :manager)
+      restaurant_a = build(:restaurant, manager: user_a)
+      expect(restaurant_a.valid?).to be true
+
+      user_b = create(:user, role: :guest)
+      restaurant_b = build(:restaurant, manager: user_b)
+      expect(restaurant_b.valid?).to be false
+      expect(restaurant_b.errors.messages).to include(manager: ['Manager shoudl have a manager role'])
+    end
+  end
 end

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: reservations
@@ -52,7 +53,22 @@ class Reservation < ApplicationRecord
   validates :status,     presence: true
   validates :covers,     presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 1 }
 
+  validate :book_once_aday
+
   ## --------------------- Callbacks ---------------------- ##
   ## ------------------- Class Methods -------------------- ##
   ## ---------------------- Methods ----------------------- ##
+
+  def book_once_aday
+    errors.add(:user, 'Guest can book only once a day') if booked_in_same_day?
+  end
+
+  def booked_in_same_day?
+    self.class
+        .where(restaurant_id: restaurant_id)
+        .where(user_id: user_id)
+        .where('date(start_time) in (?)', start_time&.to_date)
+        .where.not(id: id)
+        .exists?
+  end
 end
