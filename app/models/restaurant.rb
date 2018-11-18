@@ -49,6 +49,7 @@ class Restaurant < ApplicationRecord
   validates :location,      presence: true
   validates :cuisines,      presence: true
   validates :opening_hours, presence: true
+  validates :manager_id,    presence: true, uniqueness: true
 
   validate :owner_with_manager_role
 
@@ -58,6 +59,6 @@ class Restaurant < ApplicationRecord
 
   # Check if restaurant user have manager role
   def owner_with_manager_role
-    errors.add(:manager, 'Manager shoudl have a manager role') unless manager.manager?
+    errors.add(:manager, 'Manager shoudl have a manager role') unless manager&.manager?
   end
 end

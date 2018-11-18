@@ -40,6 +40,7 @@ RSpec.describe Restaurant, type: :model do
     it { should validate_presence_of(:opening_hours) }
     it { should allow_value('user@example.com').for(:email) }
     it { should_not allow_value('invalid-email').for(:email) }
+    it { should validate_uniqueness_of(:manager_id).ignoring_case_sensitivity }
   end
 
   describe 'associations' do

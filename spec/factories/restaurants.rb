@@ -28,7 +28,7 @@
 
 FactoryBot.define do
   factory :restaurant do
-    manager         { User.manager.random.first || FactoryBot.create(:user, role: :manager) }
+    manager_id      { FactoryBot.create(:user, role: :manager).id }
     name            { Faker::Company.name }
     email           { Faker::Internet.email(name) }
     location        { Faker::Address.full_address }

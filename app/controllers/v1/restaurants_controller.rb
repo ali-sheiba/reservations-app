@@ -7,7 +7,7 @@ class V1::RestaurantsController < V1::BaseController
     [:create] => :creatable_restaurant,
     [:update] => :updatable_restaurant,
     [:destroy] => :destroyable_restaurant
-  }, as: :restaurant_scope
+  }, as: :restaurants_scope
 
   # # GET /v1/restaurants
   # def index; end

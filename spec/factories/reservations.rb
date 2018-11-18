@@ -27,11 +27,16 @@
 
 FactoryBot.define do
   factory :reservation do
-    restaurant    { Restaurant.random.first || FactoryBot.create(:restaurant) }
-    user          { User.guest.random.first || FactoryBot.create(:user, role: :guest) }
-    start_time    { Faker::Time.between(Date.today, 2.days.from_now, :day) }
+    restaurant_id { Restaurant.random.first&.id || FactoryBot.create(:restaurant).id }
+    user_id       { User.guest.random.first&.id || FactoryBot.create(:user, role: :guest).id }
     status        { Reservation.statuses.keys.sample }
     note          { [nil, Faker::Lorem.paragraph].sample }
     covers        { rand(1..10) }
+    start_time    do
+      loop do
+        date = Faker::Time.between(Date.today, 20.days.from_now, :day)
+        break date unless booked_in_same_day?
+      end
+    end
   end
 end

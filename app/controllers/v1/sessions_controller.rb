@@ -8,6 +8,7 @@ class V1::SessionsController < ApplicationController
   def create
     user = User.login(session_params)
     if user
+      # return user object and JWT token on success login
       render_created(
         user: user,
         token: JsonWebToken.encode(user.jwt_payload)
@@ -16,6 +17,7 @@ class V1::SessionsController < ApplicationController
       render_error(error: 'invalid email or password')
     end
   rescue ArgumentError => e
+    # handle missing params
     render_unprocessable_entity(error: e.message)
   end
 

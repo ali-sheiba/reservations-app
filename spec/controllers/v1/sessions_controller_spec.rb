@@ -9,7 +9,7 @@ RSpec.describe V1::SessionsController, type: :controller do
       expect(response).to have_http_status(:unprocessable_entity)
     end
 
-    pending 'returns http created with JWT if valid email and password' do
+    it 'returns http created with JWT if valid email and password' do
       user = create(:user, password: 'psasword')
       post :create, params: { email: user.email, password: 'psasword' }, as: :json
       expect(response).to have_http_status(:success)

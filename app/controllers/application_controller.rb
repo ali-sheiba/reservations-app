@@ -17,6 +17,7 @@ class ApplicationController < ActionController::API
 
   private
 
+  # Authenticate Requests from request Headers
   def authenticate_request!
     return render_unauthorized unless request.headers['Authorization'].present?
 

@@ -81,39 +81,48 @@ class V1::BaseController < ApplicationController
 
   private
 
+  # Get the dynamically from power
   def scope
     @scope ||= send("#{resource_name.pluralize}_scope")
   end
 
+  # find resource from the scope
   def find_resource(resource = nil)
     resource ||= scope.find(id_parameter)
     instance_variable_set("@#{resource_name}", resource)
   end
 
+  # Get dynamic resource instance variable
   def resource
     instance_variable_get("@#{resource_name}")
   end
 
+  # set resource class dynamically from controller's name
   def resource_class
     @resource_class ||= resource_name.classify.constantize
   end
 
+  # set resource name from controller's name
   def resource_name
     @resource_name ||= controller_name.singularize
   end
 
+  # get resource params ddynamically
   def resource_params
     @resource_params ||= send("#{resource_name}_params")
   end
 
+  # allow users to costimize and handle custom params here
   def params_processed
     resource_params
   end
 
+  # get or build the collection
   def collection
     @collection ||= build_collection
   end
 
+  # Build collections by applying pagination, search by ransach and custom order
   def build_collection(object = nil)
     result = (object || scope)
     result = result.ransack(search_params).result           if search_params.present?
@@ -122,20 +131,24 @@ class V1::BaseController < ApplicationController
     result
   end
 
+  # ransac search params
   def search_params
     params[:q]
   end
 
+  # default order for collections
   def collection_order
     {
       created_at: :desc
     }
   end
 
+  # default id parameter
   def id_parameter
     params[:id]
   end
 
+  # pagination object
   def pagination(object)
     {
       current_page: object.try(:current_page) || 1,
@@ -147,14 +160,17 @@ class V1::BaseController < ApplicationController
     }
   end
 
+  # allow user to pass values to acts_as_api serializer
   def template_injector
     {}
   end
 
+  # get index response key from resource pluralize name
   def index_key
     resource_name.to_s.pluralize.to_sym
   end
 
+  # get show response key from resource singularize name
   def show_key
     resource_name.to_s.singularize.to_sym
   end
