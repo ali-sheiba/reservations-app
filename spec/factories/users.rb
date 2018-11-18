@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: users
@@ -9,7 +8,7 @@
 #  first_name      :string           not null
 #  last_name       :string           not null
 #  password_digest :string           not null
-#  role            :integer          default("resturant"), not null
+#  role            :integer          default("guest"), not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #

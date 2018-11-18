@@ -8,8 +8,8 @@ module ReservationPresenter
 
     api_accessible :base do |t|
       t.add :id
-      t.add :restaurant_id
-      t.add :guest_id
+      t.add :restaurant, template: :base
+      t.add :user,       template: :base
       t.add :status
       t.add :start_time
       t.add :covers

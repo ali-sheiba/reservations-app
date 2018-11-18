@@ -18,7 +18,7 @@ class ApplicationController < ActionController::API
   private
 
   def authenticate_request!
-    return unless request.headers['Authorization'].present?
+    return render_unauthorized unless request.headers['Authorization'].present?
 
     @token ||= AuthenticateRequest.get(User, request.headers['Authorization'].split(' ').last)
     @current_user = @token[:user]

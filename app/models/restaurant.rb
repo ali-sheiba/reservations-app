@@ -39,7 +39,7 @@ class Restaurant < ApplicationRecord
   belongs_to :manager, class_name: 'User'
 
   has_many :reservations, dependent: :destroy
-  has_many :guests,       through: :reservations
+  has_many :guests,       through: :reservations, source: :user
 
   ## -------------------- Validations --------------------- ##
 

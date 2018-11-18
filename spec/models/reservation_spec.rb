@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: reservations
@@ -8,21 +7,21 @@
 #  covers        :integer          default(1), not null
 #  note          :text
 #  start_time    :datetime         not null
-#  status        :integer          default(0), not null
+#  status        :integer          default("booked"), not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-#  guest_id      :bigint(8)        not null
 #  restaurant_id :bigint(8)        not null
+#  user_id       :bigint(8)        not null
 #
 # Indexes
 #
-#  index_reservations_on_guest_id       (guest_id)
 #  index_reservations_on_restaurant_id  (restaurant_id)
+#  index_reservations_on_user_id        (user_id)
 #
 # Foreign Keys
 #
-#  fk_rails_...  (guest_id => guests.id) ON DELETE => cascade
 #  fk_rails_...  (restaurant_id => restaurants.id) ON DELETE => cascade
+#  fk_rails_...  (user_id => users.id) ON DELETE => cascade
 #
 
 require 'rails_helper'
@@ -37,7 +36,7 @@ RSpec.describe Reservation, type: :model do
 
   describe 'associations' do
     it { should belong_to(:restaurant) }
-    it { should belong_to(:guest) }
+    it { should belong_to(:user) }
   end
 
   describe 'enums' do

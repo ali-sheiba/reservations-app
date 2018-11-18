@@ -25,7 +25,7 @@ class Power
   power :creatable_restaurant,
         :updatable_restaurant,
         :destroyable_restaurant do
-    return Restaurant if current_user&.admin?
+    return Restaurant if current_user.admin?
 
     raise Consul::Powerless
   end
@@ -38,10 +38,13 @@ class Power
         :updatable_reservation,
         :destroyable_reservation do
     # Admin can check all reservations
-    return Reservation if current_user&.admin?
+    return Reservation.includes(:user, :restaurant) if current_user.admin?
 
     # Restaurant manager can check his own restaurant reservations only
-    return current_user.restaurant&.reservations || Reservation.none if current_user&.manager?
+    return current_user.restaurant.reservations.includes(:user, :restaurant) if current_user.manager?
+
+    # Guests can only check there own resurvations
+    return current_user.reservations.includes(:user, :restaurant) if current_user.guest?
 
     raise Consul::Powerless
   end

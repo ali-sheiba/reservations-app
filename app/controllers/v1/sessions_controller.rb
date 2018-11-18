@@ -3,6 +3,8 @@
 class V1::SessionsController < ApplicationController
   power :sessions
 
+  skip_before_action :authenticate_request!
+
   def create
     user = User.login(session_params)
     if user

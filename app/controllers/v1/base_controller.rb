@@ -38,8 +38,8 @@ class V1::BaseController < ApplicationController
       render_created(data)
     else
       render_unprocessable_entity(
-        error: @restaurant.errors.full_messages.to_sentence,
-        details: @restaurant.errors
+        error: resource.errors.full_messages.to_sentence,
+        details: resource.errors
       )
     end
   end
@@ -57,8 +57,8 @@ class V1::BaseController < ApplicationController
       render_success(data)
     else
       render_unprocessable_entity(
-        error: @restaurant.errors.full_messages.to_sentence,
-        details: @restaurant.errors
+        error: resource.errors.full_messages.to_sentence,
+        details: resource.errors
       )
     end
   end
@@ -71,8 +71,8 @@ class V1::BaseController < ApplicationController
       render_success(message: 'Record deleted successfully')
     else
       render_unprocessable_entity(
-        error: @restaurant.errors.full_messages.to_sentence,
-        details: @restaurant.errors
+        error: resource.errors.full_messages.to_sentence,
+        details: resource.errors
       )
     end
   end
@@ -82,10 +82,7 @@ class V1::BaseController < ApplicationController
   private
 
   def scope
-    scope_name = "#{resource_name.pluralize}_scope"
-    @scope ||= send(scope_name)
-  rescue NoMethodError
-    resource_class
+    @scope ||= send("#{resource_name.pluralize}_scope")
   end
 
   def find_resource(resource = nil)

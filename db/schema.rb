@@ -15,28 +15,17 @@ ActiveRecord::Schema.define(version: 2018_11_17_075343) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "guests", force: :cascade do |t|
-    t.string "first_name", null: false
-    t.string "last_name", null: false
-    t.string "phone", null: false
-    t.string "email", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["email"], name: "index_guests_on_email"
-    t.index ["phone"], name: "index_guests_on_phone"
-  end
-
   create_table "reservations", force: :cascade do |t|
     t.bigint "restaurant_id", null: false
-    t.bigint "guest_id", null: false
+    t.bigint "user_id", null: false
     t.integer "status", default: 0, null: false
     t.datetime "start_time", null: false
     t.integer "covers", default: 1, null: false
     t.text "note"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["guest_id"], name: "index_reservations_on_guest_id"
     t.index ["restaurant_id"], name: "index_reservations_on_restaurant_id"
+    t.index ["user_id"], name: "index_reservations_on_user_id"
   end
 
   create_table "restaurants", force: :cascade do |t|
@@ -65,7 +54,7 @@ ActiveRecord::Schema.define(version: 2018_11_17_075343) do
     t.index "lower((email)::text)", name: "index_users_on_LOWER_email", unique: true
   end
 
-  add_foreign_key "reservations", "guests", on_delete: :cascade
   add_foreign_key "reservations", "restaurants", on_delete: :cascade
+  add_foreign_key "reservations", "users", on_delete: :cascade
   add_foreign_key "restaurants", "users", column: "manager_id", on_delete: :cascade
 end

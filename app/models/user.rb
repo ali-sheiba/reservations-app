@@ -9,7 +9,7 @@
 #  first_name      :string           not null
 #  last_name       :string           not null
 #  password_digest :string           not null
-#  role            :integer          default("resturant"), not null
+#  role            :integer          default("guest"), not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #
@@ -30,12 +30,14 @@ class User < ApplicationRecord
 
   enum role: {
     admin: 0, # System super admin
-    manager: 1 # Restaurant owner
+    guest: 1, # Normal User / Guest
+    manager: 2 # Restaurant owner
   }
 
   ## -------------------- Associations -------------------- ##
 
   has_one :restaurant, dependent: :destroy, required: false, foreign_key: :manager_id
+  has_many :reservations
 
   ## -------------------- Validations --------------------- ##
 
