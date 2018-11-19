@@ -1,4 +1,4 @@
-# Reservation Booking App
+# Reservation Booking App [![Build Status](https://travis-ci.org/ali-sheiba/reservations-app.svg?branch=master)](https://travis-ci.org/ali-sheiba/reservations-app)
 
 Basic restaurant reservation application, using Rails 5 API with simple Rspec tests
 
