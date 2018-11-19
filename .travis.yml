@@ -1,4 +1,7 @@
 language: ruby
+cache:
+  directories:
+    - /home/travis/.rvm/
 rvm:
  - 2.5.1
 services:
@@ -7,6 +10,3 @@ before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
   - cp config/database.yml.travis config/database.yml
   - echo "$MASTER_KEY" > config/master.key
- cache:
-    directories:
-     - /home/travis/.rvm/
