@@ -7,6 +7,7 @@ Basic restaurant reservation application, using Rails 5 API with simple Rspec te
 ## Setup Requirements
 
 To run this project in local development, you need:
+
 - Ruby 2.5.1
 
 clone the repo and run:
