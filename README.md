@@ -39,3 +39,4 @@ Application have 3 types of users:
 - All CRUD controllers are inhereting from [BaseController](app/controllers/v1/base_controller.rb) as most of the logic are same
 - Same API resource can be accessed by all roles, and data will be scoped by the user role
 - All roles scopes and permissions are in [Power](app/models/power.rb) class
+- JSON serializers can be found in [Presenters](app/presenters)

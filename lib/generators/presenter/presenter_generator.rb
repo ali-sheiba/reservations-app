@@ -3,6 +3,7 @@
 class PresenterGenerator < Rails::Generators::NamedBase
   source_root File.expand_path('templates', __dir__)
 
+  # Generate acts_as_api presenters
   desc 'Generate acts_as_api model presenter'
   def create_presenter_file
     template 'presenter.rb', File.join('app/presenters', class_path, "#{file_name}_presenter.rb")
